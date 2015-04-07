@@ -26,6 +26,18 @@ if [ "${HTTP_PASS}" == "**Random**" ]; then
     unset HTTP_PASS
 fi
 
+sed -i.bak "s/HTTP_PORT/$HTTP_PORT/g" /etc/nginx/sites-enabled/default.conf
+rm /etc/nginx/sites-enabled/default.conf.bak
+
+sed -i.bak "s/HTTP_INFLUXDB_PORT/$HTTP_INFLUXDB_PORT/g" /etc/nginx/sites-enabled/influxdb.conf
+rm /etc/nginx/sites-enabled/influxdb.conf.bak
+
+sed -i.bak "s/INFLUXDB_HOST/$INFLUXDB_HOST/g" /etc/nginx/sites-enabled/influxdb.conf
+rm /etc/nginx/sites-enabled/influxdb.conf.bak
+
+sed -i.bak "s/INFLUXDB_PORT/$INFLUXDB_PORT/g" /etc/nginx/sites-enabled/influxdb.conf
+rm /etc/nginx/sites-enabled/influxdb.conf.bak
+
 if [ ! -f /.basic_auth_configured ]; then
     /set_basic_auth.sh
 fi
@@ -36,11 +48,6 @@ fi
 
 if [ ! -f /.elasticsearch_configured ]; then
     /set_elasticsearch.sh
-fi
-
-if [[ ! -z $HTTP_PORT ]]; then
-  sed -i.bak "s/80/$HTTP_PORT/g" /etc/nginx/sites-enabled/default
-  rm /etc/nginx/sites-enabled/default.bak
 fi
 
 echo "=> Starting and running Nginx..."

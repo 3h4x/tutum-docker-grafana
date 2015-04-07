@@ -15,11 +15,13 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 ADD config.js /app/config.js
-ADD default /etc/nginx/sites-enabled/default
+ADD default.conf /etc/nginx/sites-enabled/default.conf
+ADD influxdb.conf /etc/nginx/sites-enabled/influxdb.conf
 
 # Environment variables for HTTP AUTH
 ENV HTTP_USER admin
 ENV HTTP_PASS **Random**
+ENV HTTP_INFLUXDB_PORT 8001
 
 ENV INFLUXDB_PROTO http
 ENV INFLUXDB_HOST **ChangeMe**
