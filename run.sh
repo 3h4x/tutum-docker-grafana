@@ -38,5 +38,10 @@ if [ ! -f /.elasticsearch_configured ]; then
     /set_elasticsearch.sh
 fi
 
+if [[ ! -z $HTTP_PORT ]]; then
+  sed -i.bak "s/80/$HTTP_PORT/g" /etc/nginx/sites-enabled/default
+  rm /etc/nginx/sites-enabled/default.bak
+fi
+
 echo "=> Starting and running Nginx..."
 /usr/sbin/nginx
